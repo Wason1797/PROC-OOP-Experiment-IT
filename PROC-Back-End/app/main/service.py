@@ -79,13 +79,17 @@ def update_size():
 
 @urls.route('/size/id/<_id>', methods=GET)
 def get_size_by_id(_id):
-    size = Size.query.get(_id)
+    size = Size()
     size_serializer = SizeSerializer()
-    return size_serializer.jsonify(size) if size else Response(status=404)
+    return size_serializer.jsonify(size) if size._id else Response(status=404)
 
+
+@urls.route('/size', methods=GET)
+def get_size():
+    result = get_all(Size, SizeSerializer)
+    return jsonify(result)
 
 # Order Routes
-
 @urls.route('/order', methods=POST)
 def create_order():
 
@@ -93,9 +97,9 @@ def create_order():
         if check_required_keys(('client_name', 'client_dni', 'client_address', 'client_phone', 'size'), request.json):
 
             client_name = request.json.get('client_name')
-            client_dni = None
-            client_address = None
-            client_phone = None
+            client_dni = request.json.get('client_dni')
+            client_address = request.json.get('client_address')
+            client_phone = request.json.get('client_phone')
             size_id = int(request.json.get('size'))
             ingredients = request.json.get('ingredients')
 
@@ -112,7 +116,8 @@ def create_order():
             db_ingredients = [Ingredient.query.get(int(ingredient_id))
                               for ingredient_id in ingredients] if isinstance(ingredients, list) else []
 
-            new_order.total_price = calculate_order_price(new_order, db_ingredients)
+            new_order.total_price = calculate_order_price(
+                new_order, db_ingredients)
 
             db.session.add_all([OrderDetail(order_id=new_order._id,
                                             ingredient_id=ingredient._id,
@@ -128,14 +133,14 @@ def create_order():
         return Response(status=400)
 
 
-@urls.route('/order', methods=GET)
-def get_orders():
-    result = get_all(Order, OrderSerializer)
-    return jsonify(result)
-
-
 @urls.route('/order/id/<_id>', methods=GET)
 def get_order_by_id(_id):
     order = Order()
     order_serializer = OrderSerializer()
-    return order_serializer.jsonify({}) if order else Response(status=404)
+    return order_serializer.jsonify(order) if order._id else Response(status=404)
+
+
+@urls.route('/order', methods=GET)
+def get_order():
+    result = get_all(Order, OrderSerializer)
+    return jsonify(result)
