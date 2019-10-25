@@ -35,9 +35,10 @@ def update_ingredient():
         return Response(status=400)
 
 
+
 @urls.route('/ingredient/id/<_id>', methods=GET)
 def get_ingredient_by_id(_id):
-    ingredient = Ingredient()
+    ingredient = Ingredient.query.get(_id)
     ingredient_serializer = IngredientSerializer()
     return ingredient_serializer.jsonify(ingredient) if ingredient._id else Response(status=404)
 
@@ -83,6 +84,12 @@ def get_size_by_id(_id):
     size_serializer = SizeSerializer()
     return size_serializer.jsonify(size) if size else Response(status=404)
 
+@urls.route('/size', methods=GET)
+def get_sizes():
+    size_serializer = SizeSerializer(many=True)
+    sizes = Size.query.all()
+    serialized_sizes = size_serializer.dump(sizes)
+    return jsonify(serialized_sizes)
 
 # Order Routes
 
@@ -93,9 +100,9 @@ def create_order():
         if check_required_keys(('client_name', 'client_dni', 'client_address', 'client_phone', 'size'), request.json):
 
             client_name = request.json.get('client_name')
-            client_dni = None
-            client_address = None
-            client_phone = None
+            client_dni = request.json.get('client_dni')
+            client_address = request.json.get('client_address')
+            client_phone = request.json.get('client_phone')
             size_id = int(request.json.get('size'))
             ingredients = request.json.get('ingredients')
 
@@ -105,7 +112,7 @@ def create_order():
                               client_phone=client_phone,
                               size_id=size_id)
 
-            db.session.add(new_order)
+            db.session.add(new_order)            
             db.session.flush()
             db.session.refresh(new_order)
 
@@ -136,6 +143,7 @@ def get_orders():
 
 @urls.route('/order/id/<_id>', methods=GET)
 def get_order_by_id(_id):
-    order = Order()
-    order_serializer = OrderSerializer()
-    return order_serializer.jsonify({}) if order else Response(status=404)
+    order = Order.query.get(_id)
+    #order_serializer = OrderSerializer()
+    #return order_serializer.jsonify({}) if order else Response(status=404)
+    return OrderSerializer().jsonify(order)
