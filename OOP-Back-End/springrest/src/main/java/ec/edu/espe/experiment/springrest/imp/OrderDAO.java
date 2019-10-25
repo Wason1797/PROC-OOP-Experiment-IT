@@ -58,9 +58,7 @@ public class OrderDAO implements IOrderDAO {
             Optional<DBOrder> aux_order = repoOrder.findById(id);
             if (aux_order != null) {
                 order = toOrder(aux_order.get());
-            } else {
-                order = null;
-            }
+            } 
         } catch (Exception e) {
             order = null;
         }

@@ -30,7 +30,7 @@ public class RestIngredientController {
     @Autowired
     private IIngredientDAO dao;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<Ingredient> getAll() {        
         return dao.getAll();
     }

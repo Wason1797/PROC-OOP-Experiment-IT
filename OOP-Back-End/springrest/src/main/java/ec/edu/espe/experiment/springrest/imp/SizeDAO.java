@@ -25,7 +25,9 @@ public class SizeDAO implements ISizeDAO{
             List<DBSize> list_dbSize = repo.findAll();
             if(list_dbSize != null){
                 for(DBSize dbSize : list_dbSize){
-                    list.add(toSize(dbSize));
+                    Size order = new Size();
+                    order = toSize(dbSize);
+                    list.add(order);
                 }
             }
         }
