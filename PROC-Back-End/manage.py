@@ -2,7 +2,7 @@ from app.main import flask_app
 from app.main.plugins import db
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-import pytest
+# import pytest
 
 
 # from app.main.models import Order, OrderDetail, Ingredient, Size
