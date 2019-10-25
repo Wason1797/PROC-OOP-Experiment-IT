@@ -39,8 +39,13 @@ public class IngredientDAO implements IIngredientDAO{
     @Override
     public Ingredient get(Integer id){
         Ingredient ingredient = null;
+        
         try{
-            
+            Optional<DBIngredient> dbIngredient = repo.findById(id);
+            if(dbIngredient != null){
+                ingredient = toIngredient(dbIngredient.get());
+            }
+           
         }
         catch(Exception e){
             ingredient = null;
