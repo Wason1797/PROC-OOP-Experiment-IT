@@ -59,5 +59,10 @@ public class RestSizeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @GetMapping
+    public List<Size> getAll() {        
+        return dao.getAll();
+    }
     
 }

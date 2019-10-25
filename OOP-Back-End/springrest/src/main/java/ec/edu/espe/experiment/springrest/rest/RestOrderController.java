@@ -2,7 +2,11 @@ package ec.edu.espe.experiment.springrest.rest;
 
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +33,27 @@ public class RestOrderController{
     }
 
     @GetMapping(value = "/id/{id}")
-    public Order get(@PathVariable("id") Integer id) {
-        return new Order();
+    public ResponseEntity<Order> get(@PathVariable("id") Integer id) {
+        Order response =  dao.get(id);
+        if(response != null){
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
 
     @PostMapping
     public Order post(@RequestBody OrderEntityClient entity) {
        return dao.post(entity);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Order> put(@RequestBody Order entity){
+        Order response = dao.put(entity);
+        if(response != null){
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 }

@@ -44,6 +44,8 @@ public class RestIngredientController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+    
+
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Ingredient> post(@RequestBody Ingredient entity) {
