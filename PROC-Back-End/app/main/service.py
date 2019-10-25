@@ -95,7 +95,7 @@ def get_size():
 def create_order():
 
     try:
-        if check_required_keys(('client_name', 'client_dni', 'client_address', 'client_phone', 'size'), request.json):
+        if check_required_keys(('client_name', 'client_dni', 'client_address', 'client_phone', 'size','ingredients'), request.json):
 
             client_name = request.json.get('client_name')
             client_dni = request.json.get('client_dni')
