@@ -27,6 +27,12 @@ public class RestSizeController {
 
     @Autowired
     private ISizeDAO dao;
+    
+    @GetMapping
+    public List<Size> getAll() {        
+        return dao.getAll();
+    }
+
 
   
 

@@ -72,17 +72,22 @@ public class OrderDAO implements IOrderDAO {
         try {
             DBOrder dbOrder = new DBOrder();
             dbOrder.setName(entity.getClient_name());
-            /*dbOrder.setAddress(entity.getClient_address());
+            dbOrder.setAddress(entity.getClient_address());
             dbOrder.setDni(entity.getClient_dni());
             
-            dbOrder.setPhone(entity.getClient_phone());*/
+            dbOrder.setPhone(entity.getClient_phone());
             dbOrder.setDate(new Date());
             dbOrder.setSize(repoSize.findById(entity.getSize()).get());
             repoOrder.save(dbOrder);
             repoOrder.flush();
             List<Ingredient> list_ingredient = daoDetail.post(dbOrder.getId(), entity.getIngredients());
             Size size = daoSize.get(dbOrder.getSize().getId());
-            Float total_price = 0f;
+            float valor=0f;
+
+            for(int i=0; i<list_ingredient.size();i++){
+                valor=valor+list_ingredient.get(i).getPrice();
+            }
+            Float total_price = size.getPrice()+valor;
             
             dbOrder.setTotal(total_price);
             repoOrder.save(dbOrder);

@@ -10,7 +10,12 @@ import org.springframework.stereotype.Repository;
 import ec.edu.espe.experiment.springrest.dao.IIngredientDAO;
 import ec.edu.espe.experiment.springrest.dto.Ingredient;
 import ec.edu.espe.experiment.springrest.model.DBIngredient;
+import ec.edu.espe.experiment.springrest.model.DBOrder;
 import ec.edu.espe.experiment.springrest.repo.IIngredientRepo;
+
+
+
+
 
 @Repository
 public class IngredientDAO implements IIngredientDAO{
@@ -38,15 +43,23 @@ public class IngredientDAO implements IIngredientDAO{
 
     @Override
     public Ingredient get(Integer id){
-        Ingredient ingredient = null;
+        Ingredient ingredient = new Ingredient();
         try{
-            
+             Optional<DBIngredient> aux_order = repo.findById(id);
+            if (aux_order != null) {
+                ingredient = toIngredient(aux_order.get());
+                
+            } else {
+                ingredient = null;
+            }
         }
         catch(Exception e){
             ingredient = null;
         }
         return ingredient;
     }
+
+     
 
     @Override
     public Ingredient post(Ingredient ingredient){       
