@@ -29,6 +29,12 @@ public class RestSizeController {
     private ISizeDAO dao;
 
   
+    @GetMapping
+    public List<Size> getAll() {
+        List<Size> response = dao.getAll();
+        return response;
+        
+    }
 
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Size> get(@PathVariable("id") Integer id) {
