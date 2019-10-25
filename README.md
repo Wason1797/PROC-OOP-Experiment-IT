@@ -1,2 +1,2 @@
-# -PROC-OOP-Experiment-OOP
-Experiment for the OOP Course
+# -PROC-OOP-Experiment-IT
+Experiment for the IT Course
