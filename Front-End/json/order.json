@@ -1,0 +1,21 @@
+{
+    "_id": 3,
+    "client_address": "Quito",
+    "client_dni": "1724561921",
+    "client_name": "Juan",
+    "client_phone": "0983147655",
+    "date": "2019-08-26T04:21:11.317370",
+    "ingredients": [
+        {
+            "_id": 2,
+            "name": "Ham",
+            "price": 0.6
+        }
+    ],
+    "size": {
+        "_id": 1,
+        "name": "Familiar",
+        "price": 15.99
+    },
+    "total_price": 15.99
+}
