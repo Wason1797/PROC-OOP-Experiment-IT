@@ -37,7 +37,7 @@ def update_ingredient():
 
 @urls.route('/ingredient/id/<_id>', methods=GET)
 def get_ingredient_by_id(_id):
-    ingredient = Ingredient()
+    ingredient = Ingredient.query.get(_id)
     ingredient_serializer = IngredientSerializer()
     return ingredient_serializer.jsonify(ingredient) if ingredient._id else Response(status=404)
 
@@ -81,7 +81,7 @@ def update_size():
 def get_size_by_id(_id):
     size = Size.query.get(_id)
     size_serializer = SizeSerializer()
-    return size_serializer.jsonify(size) if size else Response(status=404)
+    return size_serializer.jsonify(size) if size._id else Response(status=404)
 
 @urls.route('/size', methods=GET)
 def get_size():
@@ -139,6 +139,6 @@ def get_orders():
 
 @urls.route('/order/id/<_id>', methods=GET)
 def get_order_by_id(_id):
-    order = Order()
+    order = Order.query.get(_id)
     order_serializer = OrderSerializer()
-    return order_serializer.jsonify({}) if order else Response(status=404)
+    return order_serializer.jsonify({}) if order._id else Response(status=404)
