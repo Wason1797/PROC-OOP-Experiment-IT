@@ -39,7 +39,7 @@ def update_ingredient():
 def get_ingredient_by_id(_id):
     ingredient = Ingredient.query.get(_id)
     ingredient_serializer = IngredientSerializer()
-    return ingredient_serializer.jsonify(ingredient) if ingredient._id else Response(status=404)
+    return ingredient_serializer.jsonify(ingredient) if ingredient else Response(status=404)
 
 
 @urls.route('/ingredient', methods=GET)
@@ -141,4 +141,4 @@ def get_orders():
 def get_order_by_id(_id):
     order = Order.query.get(_id)
     order_serializer = OrderSerializer()
-    return order_serializer.jsonify({}) if order._id else Response(status=404)
+    return order_serializer.jsonify({}) if order else Response(status=404)
